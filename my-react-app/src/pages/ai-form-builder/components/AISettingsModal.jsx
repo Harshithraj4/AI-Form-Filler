@@ -145,3 +145,4 @@ export function AISettingsModal({ isOpen, onClose }) {
     </div>
   )
 }
+
