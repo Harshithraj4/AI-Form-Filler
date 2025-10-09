@@ -10,8 +10,12 @@ const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
 // Middleware
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true
+}));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/form-builder', {
@@ -299,8 +303,9 @@ app.post('/api/forms/:id/responses', async (req, res) => {
     const response = new Response({
       formId: req.params.id,
       data: req.body.data,
-      completed: req.body.completed,
+      completed: req.body.completed || false,
       ipAddress: req.ip,
+      userAgent: req.headers['user-agent'],
       userAgent: req.headers['user-agent'],
       completionTime: req.body.completionTime
     });

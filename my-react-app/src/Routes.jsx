@@ -7,17 +7,22 @@ import AIFormBuilder from './pages/ai-form-builder';
 import FormTemplatesLibrary from './pages/form-templates-library';
 import SmartFormInterface from './pages/smart-form-interface';
 import UserProfileSettings from './pages/user-profile-settings';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<DashboardOverview />} />
-      <Route path="/dashboard" element={<DashboardOverview />} />
-      <Route path="/form-builder" element={<AIFormBuilder />} />
-      <Route path="/analytics" element={<FormAnalytics />} />
-      <Route path="/templates" element={<FormTemplatesLibrary />} />
-      <Route path="/smart-forms" element={<SmartFormInterface />} />
-      <Route path="/profile" element={<UserProfileSettings />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/" element={<ProtectedRoute><DashboardOverview /></ProtectedRoute>} />
+      <Route path="/dashboard" element={<ProtectedRoute><DashboardOverview /></ProtectedRoute>} />
+      <Route path="/form-builder" element={<ProtectedRoute><AIFormBuilder /></ProtectedRoute>} />
+      <Route path="/analytics" element={<ProtectedRoute><FormAnalytics /></ProtectedRoute>} />
+      <Route path="/templates" element={<ProtectedRoute><FormTemplatesLibrary /></ProtectedRoute>} />
+      <Route path="/smart-forms" element={<ProtectedRoute><SmartFormInterface /></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute><UserProfileSettings /></ProtectedRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
